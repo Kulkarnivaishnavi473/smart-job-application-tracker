@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE; // ✅ use env variable
+const API_BASE = "https://smart-job-application-tracker-resume.onrender.com/api"; // ✅ use env variable
 
 export const fetchWithAuth = async (url: string, options: any = {}) => {
   let access = localStorage.getItem("access_token");
