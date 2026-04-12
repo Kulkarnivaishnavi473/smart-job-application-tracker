@@ -43,7 +43,7 @@ export default function Signup() {
     setIsLoading(true);
 
     try {
-      const signupResponse = await fetch('http://127.0.0.1:8000/api/register/', {
+      const signupResponse = await fetch('${import.meta.env.VITE_API_BASE}/register/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export default function Signup() {
         throw new Error(errorMessage);
       }
 
-      const loginResponse = await fetch('http://127.0.0.1:8000/api/login/', {
+      const loginResponse = await fetch('${import.meta.env.VITE_API_BASE}/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
