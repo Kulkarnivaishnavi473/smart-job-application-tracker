@@ -93,7 +93,7 @@ DATABASES = {
 }
 
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("postgresql://jobtracker_db_vl2f_user:T3LQ355GMEJJJEcdltxBFdhlJ9Xe7yQd@dpg-d7dl3jhkh4rs739rlbr0-a/jobtracker_db_vl2f"))
+    'default': dj_database_url.parse(os.environ.get("postgresql://job_tracker_db_0m0j_user:aHHUFXnFS0f5nhWsXDLIqFMZ6OCh0k93@dpg-d7dnvpfavr4c73e6omsg-a/job_tracker_db_0m0j"))
 }
 
 
