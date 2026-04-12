@@ -83,7 +83,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'job_tracker_db',
         'USER': 'jobuser',
         'PASSWORD': 'password123',
