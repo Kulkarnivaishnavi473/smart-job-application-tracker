@@ -173,10 +173,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 from corsheaders.defaults import default_headers
 CORS_ALLOW_ORIGINS = [
-    'http://localhost:8080',
-    'http://127.0.0.1:8080',
-    'http://localhost:8081',
-    'http://127.0.0.1:8081',
+    "https://smart-job-application-tracker-resum.vercel.app"
 ]
-
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
