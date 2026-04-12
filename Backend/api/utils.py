@@ -1,6 +1,6 @@
 import re
 from collections import Counter
-import fitz
+import pdfplumber
 from docx import Document
 
 # =========================
@@ -57,22 +57,30 @@ GENERIC_WORDS = {
 # =========================
 # FILE TEXT EXTRACTION
 # =========================
-def extract_resume_text(file_path):
-    text = ""
-    try:
-        if file_path.endswith(".pdf"):
-            doc = fitz.open(file_path)
-            for page in doc:
-                text += page.get_text()
-            doc.close()
+import pdfplumber
+from io import BytesIO
+from docx import Document
 
-        elif file_path.endswith(".docx"):
-            doc = Document(file_path)
+def extract_resume_text(file):
+    text = ""
+
+    try:
+        if file.name.endswith(".pdf"):
+            pdf_file = BytesIO(file.read())
+
+            with pdfplumber.open(pdf_file) as pdf:
+                for page in pdf.pages:
+                    text += page.extract_text() or ""
+
+        elif file.name.endswith(".docx"):
+            doc = Document(file)
             for para in doc.paragraphs:
                 text += para.text + "\n"
 
         return text.strip()
-    except:
+
+    except Exception as e:
+        print("Error extracting text:", e)
         return ""
 
 # =========================
