@@ -43,11 +43,8 @@ export default function Signup() {
     setIsLoading(true);
 
     try {
-      const signupResponse = await fetch(`${import.meta.env.VITE_API_BASE}/register/}`, {
+      const signupResponse = await fetchWithAuth('/register/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({
           username: formData.username.trim(),
           email: formData.email.trim(),
@@ -67,11 +64,8 @@ export default function Signup() {
         throw new Error(errorMessage);
       }
 
-      const loginResponse = await fetch(`${import.meta.env.VITE_API_BASE}/login/}`, {
+      const loginResponse = await fetchWithAuth('/login/', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
