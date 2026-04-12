@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Briefcase, Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { Briefcase, Mail, Lock, ArrowRight, Eye, EyeOff, AppleIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,7 +21,7 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('${API_BASE}/login/', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE}/login/}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
