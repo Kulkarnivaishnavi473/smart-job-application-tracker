@@ -4,7 +4,6 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import JobApplication, Resume, ResumeAnalysis  
 from .serializers import RegisterSerializer, JobApplicationSerializer, ResumeSerializer, ResumeAnalyzerSerializer, ResumeAnalysisSerializer
-from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -16,6 +15,9 @@ import tempfile
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.throttling import UserRateThrottle
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class JobApplicationListCreateView(generics.ListCreateAPIView):
     serializer_class = JobApplicationSerializer
@@ -164,7 +166,13 @@ class LoginView(APIView):
             )
 
         try:
-            user_obj = User.objects.get(email=email)
+            user_obj = User.objects.filter(email=email).first()
+            if not user_obj:
+                return Response(
+                    {"error": "Invalid email or password."},
+                    status=status.HTTP_401_UNAUTHORIZED
+            )
+
         except User.DoesNotExist:
             return Response(
                 {"error": "Invalid email or password."},
