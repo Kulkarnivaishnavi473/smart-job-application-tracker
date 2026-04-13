@@ -176,7 +176,12 @@ class LoginView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        user = authenticate(username=user_obj.username, password=password)
+        if not user_obj.check_password(password):
+            return Response(
+                {"error": "Invalid email or password."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        user = user_obj
 
         if user is None:
             return Response(
