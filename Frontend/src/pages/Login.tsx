@@ -20,10 +20,13 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
+    console.log("FORM DATA: ", formData);
     try {
-      const response = await fetchWithAuth('/login/', {
+      const response = await fetch("https://smart-job-application-tracker.onrender.com/api/login/", {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
