@@ -35,7 +35,8 @@ export default function Login() {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if (response.status !== 200) {
+        console.log("LOGIN ERROR RESPONSE:", data);
         throw new Error(data?.error || 'Login failed');
       }
 
