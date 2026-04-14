@@ -67,18 +67,10 @@ class ResumeDeleteView(generics.DestroyAPIView):
     def get_queryset(self):
         return Resume.objects.filter(user=self.request.user)
         
-class RegisterView(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['email', 'password']
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
-    def create(self, validated_data):
-        email = validated_data.get['email']
-        password = validated_data.get['password']
-        user = User.objects.create_user(username = email, email = email, password=password)
-        return user
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [AllowAny]
+    serializer_class = RegisterSerializer
     
 from .utils import (
     extract_resume_text,
