@@ -78,20 +78,25 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password']
 
     def validate(self, data):
-        if User.objects.filter(username = data['username']).exists():
+        if User.objects.filter(username = data.get('username')).exists():
             raise serializers.ValidationError({"username": "A user with that username already exists."})
-        if User.objects.filter(email = data['email']).exists():
+        if User.objects.filter(email = data.get('email')).exists():
             raise serializers.ValidationError({"email": "An account with this email already exists."})
         return data
 
     def create(self, validated_data):
         print("CREATING USER: ", validated_data)
-        user = User.objects.create_user(
-            username = validated_data['username'],
-            email = validated_data['email'],
-            password = validated_data['password']
-        )
-        return user
+        try:
+            user = User.objects.create_user(
+                username = validated_data.get('username'),
+                email = validated_data.get('email'),
+                password = validated_data.get('password')
+            )
+            return user
+        except Exception as e:
+            print("ERROR CREATING USER: ", e)
+            raise serializers.ValidationError({"error": str(e)})
+
 
 class ResumeAnalysisSerializer(serializers.ModelSerializer):
     resume = serializers.FileField(required=False)
