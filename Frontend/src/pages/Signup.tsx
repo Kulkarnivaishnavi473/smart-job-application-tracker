@@ -52,8 +52,12 @@ export default function Signup() {
         }),
       });
 
-      const signupData = await signupResponse.json();
-
+      let signupData;
+      try {
+        signupData = await signupResponse.json();
+      } catch (error) {
+        throw new Error('Server error. Please try again later.');
+      }
       if (!signupResponse.ok) {
         const errorMessage =
           signupData?.email?.[0] ||

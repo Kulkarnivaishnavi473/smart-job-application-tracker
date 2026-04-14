@@ -17,7 +17,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.throttling import UserRateThrottle
 from django.contrib.auth import get_user_model
 
-from Backend.api import serializers
+from . import serializers
 
 User = get_user_model()
 
