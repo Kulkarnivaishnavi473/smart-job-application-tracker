@@ -55,6 +55,8 @@ export default function Signup() {
       let signupData;
       try {
         signupData = await signupResponse.json();
+        const text = await signupResponse.text();
+        console.log("BACKEND RESPONSE:", text);
       } catch (error) {
         throw new Error('Server error. Please try again later.');
       }
