@@ -156,6 +156,8 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        print("Login API HIT")
+        print("DATA: ", request.data)
         email = request.data.get("email")
         password = request.data.get("password")
 
