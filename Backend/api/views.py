@@ -73,6 +73,16 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
     parser_classes = [JSONParser, FormParser, MultiPartParser]
+
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except Exception as e:
+            print("ERROR:", str(e))
+            return Response(
+                {"error:", str(e)},
+                status = 500
+            )
     
 from .utils import (
     extract_resume_text,
