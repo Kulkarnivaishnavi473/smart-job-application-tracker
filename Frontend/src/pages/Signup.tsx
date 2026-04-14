@@ -41,10 +41,13 @@ export default function Signup() {
     }
 
     setIsLoading(true);
-
+    console.log("FORM DATA: ", formData);
     try {
-      const signupResponse = await fetchWithAuth('/register/', {
+      const signupResponse = await fetch("https://smart-job-application-tracker.onrender.com/api/register/", {
         method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           username: formData.username.trim(),
           email: formData.email.trim(),
@@ -52,13 +55,13 @@ export default function Signup() {
         }),
       });
 
+      const text = await signupResponse.text();
+      console.log("SIGNUP RESPONSE TEXT:", text);
       let signupData;
       try {
-        signupData = await signupResponse.json();
-        const text = await signupResponse.text();
-        console.log("BACKEND RESPONSE:", text);
+        signupData = JSON.parse(text);
       } catch (error) {
-        throw new Error('Server error. Please try again later.');
+        throw new Error('Invalid response from server');
       }
       if (!signupResponse.ok) {
         const errorMessage =
