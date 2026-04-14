@@ -7,7 +7,7 @@ from .models import JobApplication, Resume, ResumeAnalysis
 from .serializers import RegisterSerializer, JobApplicationSerializer, ResumeSerializer, ResumeAnalyzerSerializer, ResumeAnalysisSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from .utils import extract_resume_text, analyze_resume_vs_job
 from .models import ResumeAnalysis
 from rest_framework.views import APIView
@@ -72,6 +72,7 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
+    parser_classes = [JSONParser]
     
 from .utils import (
     extract_resume_text,
