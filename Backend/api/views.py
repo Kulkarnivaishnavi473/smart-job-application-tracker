@@ -18,7 +18,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.throttling import UserRateThrottle
 from django.contrib.auth import get_user_model
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 
 from . import serializers
 
@@ -207,6 +207,7 @@ class LoginView(APIView):
         })
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login_with_email(request):
     email = request.data.get("email")
     password = request.data.get("password")
