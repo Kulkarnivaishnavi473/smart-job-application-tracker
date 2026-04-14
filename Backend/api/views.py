@@ -72,7 +72,7 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [AllowAny]
     serializer_class = RegisterSerializer
-    parser_classes = [JSONParser]
+    parser_classes = [JSONParser, FormParser, MultiPartParser]
     
 from .utils import (
     extract_resume_text,
