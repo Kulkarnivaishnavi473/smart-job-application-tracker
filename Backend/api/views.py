@@ -1,5 +1,6 @@
 import os
-# from . import serializers
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -17,6 +18,7 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.throttling import UserRateThrottle
 from django.contrib.auth import get_user_model
+from rest_framework.decorators import api_view
 
 from . import serializers
 
@@ -203,6 +205,32 @@ class LoginView(APIView):
                 "email": user.email,
             }
         })
+
+@api_view(['POST'])
+def login_with_email(request):
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return Response(
+            {"error": "Invalid email or password"},
+            status= 400
+        )
+    user = authenticate(request, username=user.username, password=password)
+    if user is None:
+        return Response({"error": "Invalid email or password"}, status=400)
+    refresh = RefreshToken.for_user(user)
+    return Response({
+        "access": str(refresh.access_token),
+        "refresh": str(refresh),
+        "user": {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+        }
+    })
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]

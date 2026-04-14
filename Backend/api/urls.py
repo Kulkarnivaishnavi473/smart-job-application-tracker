@@ -12,6 +12,6 @@ urlpatterns = [
     path('resume-analyzer/', ResumeAnalyzerView.as_view()),
     path('resumes/<int:pk>/', ResumeDetailView.as_view()),
     path('analysis-history/', ResumeAnalysisListView.as_view(), name = "analysis-history"),
-    path('login/', LoginView.as_view(), name = 'login'),
+    path('login/', login_with_email, name = 'login'),
     path('profile/', ProfileView.as_view()),
 ]
