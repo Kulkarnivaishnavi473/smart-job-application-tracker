@@ -164,44 +164,23 @@ class LoginView(APIView):
                 {"error": "Email and password are required."},
                 status=status.HTTP_400_BAD_REQUEST
             )
+        user = User.objects.filter(email=email).first()
 
-        try:
-            user_obj = User.objects.filter(email=email).first()
-            if not user_obj:
-                return Response(
-                    {"error": "Invalid email or password."},
-                    status=status.HTTP_401_UNAUTHORIZED
-            )
-
-        except User.DoesNotExist:
+        if not user:
             return Response(
-                {"error": "Invalid email or password."},
+                {"error": "Invalid email or password"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-        except User.MultipleObjectsReturned:
+        
+        if not user.check_password(password):
             return Response(
-                {"error": "Multiple accounts found with this email."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        if not user_obj.check_password(password):
-            return Response(
-                {"error": "Invalid email or password."},
+                {"error": "Invalid email or password"},
                 status=status.HTTP_401_UNAUTHORIZED
             )
-        user = user_obj
-
-        if user is None:
-            return Response(
-                {"error": "Invalid email or password."},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-
         refresh = RefreshToken.for_user(user)
-
         return Response({
-            "refresh": str(refresh),
             "access": str(refresh.access_token),
+            "refresh": str(refresh),
             "user": {
                 "id": user.id,
                 "username": user.username,
