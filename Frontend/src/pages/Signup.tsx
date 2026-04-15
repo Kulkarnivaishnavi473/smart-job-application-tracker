@@ -43,7 +43,8 @@ export default function Signup() {
     setIsLoading(true);
     console.log("FORM DATA: ", formData);
     try {
-      const signupResponse = await fetch("https://smart-job-application-tracker-resume.onrender.com/api/register/", {
+      const API_BASE = import.meta.env.VITE_API_BASE; // ✅ use env variable
+      const signupResponse = await fetch(`${API_BASE}/register/`, {
         method: 'POST',
         headers:{
           'Content-Type': 'application/json',
@@ -73,7 +74,7 @@ export default function Signup() {
         throw new Error(errorMessage);
       }
 
-      const loginResponse = await fetch('https://smart-job-application-tracker-resume.onrender.com/api/login/', {
+      const loginResponse = await fetch(`${API_BASE}/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
