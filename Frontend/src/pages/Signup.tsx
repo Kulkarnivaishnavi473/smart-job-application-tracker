@@ -43,7 +43,7 @@ export default function Signup() {
     setIsLoading(true);
     console.log("FORM DATA: ", formData);
     try {
-      const signupResponse = await fetch("https://smart-job-application-tracker.onrender.com/api/register/", {
+      const signupResponse = await fetch("https://smart-job-application-tracker-resume.onrender.com/api/register/", {
         method: 'POST',
         headers:{
           'Content-Type': 'application/json',
@@ -73,8 +73,11 @@ export default function Signup() {
         throw new Error(errorMessage);
       }
 
-      const loginResponse = await fetchWithAuth('/login/', {
+      const loginResponse = await fetch('https://smart-job-application-tracker-resume.onrender.com/api/login/', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,

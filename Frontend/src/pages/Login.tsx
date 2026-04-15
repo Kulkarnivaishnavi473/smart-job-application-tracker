@@ -22,7 +22,7 @@ export default function Login() {
     setIsLoading(true);
     console.log("FORM DATA: ", formData);
     try {
-      const response = await fetch("https://smart-job-application-tracker.onrender.com/api/login/", {
+      const response = await fetch("https://smart-job-application-tracker-resume.onrender.com/api/login/", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
