@@ -213,13 +213,13 @@ def login_with_email(request):
     password = request.data.get("password")
 
     try:
-        user = User.objects.get(email=email)
+        user_obj = User.objects.get(email=email)
     except User.DoesNotExist:
         return Response(
             {"error": "Invalid email or password"},
             status= 400
         )
-    user = authenticate(request, username=user.username, password=password)
+    user = authenticate(request, username=user_obj.username, password=password)
     if user is None:
         return Response({"error": "Invalid email or password"}, status=400)
     refresh = RefreshToken.for_user(user)
