@@ -23,7 +23,7 @@ export default function Login() {
     console.log("FORM DATA: ", formData);
     try {
       const API_BASE = import.meta.env.VITE_API_BASE; // ✅ use env variable
-      const response = await fetch(`${API_BASE}/login/}`, {
+      const response = await fetch(`${API_BASE}/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
